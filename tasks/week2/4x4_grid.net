@@ -1,0 +1,40 @@
+* C:\Users\marim\Desktop\summer 2024 projects\internship 2024\tasks\week2\4x4_grid.asc
+RH00 N01 N00 1K
+RH01 N02 N01 1k
+RH02 N03 N02 1k
+RV00 N10 N00 1k
+RV01 N11 N01 1k
+RV02 N11 N02 1k
+RV03 N13 N03 1k
+RV10 N20 N10 1k
+RH20 N20 N21 1k
+RH21 N21 N22 1k
+RH22 N22 N23 1k
+RH10 N11 N10 1k
+RH12 N13 N11 1k
+RV11 N21 N11 1K
+RV12 N22 N11 1k
+RV13 N23 N13 1k
+RV20 N20 N30 1k
+RV21 N21 N31 1k
+RV22 N22 N32 1k
+RV23 N23 0 1k
+RH30 N31 N30 1k
+RH31 N32 N31 1k
+RH32 0 N32 1k
+V1 N00 0 10
+.tran 1
+* A
+* B
+* C
+* D
+* E
+* F
+* G
+* H
+* I
+* J
+* K
+* L
+.backanno
+.end
