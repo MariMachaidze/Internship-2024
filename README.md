@@ -5,7 +5,7 @@ to do:
  - Finish making recursion
 
 28 July:
- - 
+ - I am working on finilizing recurion solution.
 
 26 July:
  - I figured out how to make recursion of the even-noded-side grid.
