@@ -6,6 +6,7 @@ to do:
 
 28 July:
  - I am working on finilizing recurion solution.
+   - First, I need to finish making good looking data. file - making perimeter.
 
 26 July:
  - I figured out how to make recursion of the even-noded-side grid.
