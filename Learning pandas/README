@@ -9,8 +9,10 @@ The following files do following:
 6. downloading - trying some stuff in python.
 7. data_append_version - trying append
 8. Data visualization and predictions - good version of making perimeter data + some data visualization, symmetries and prediction
-
-
 9. making perimeter - combination of all good versions of making perimeter. It reads data from voltages in every node and returns perimeter.
+10. something - I worked and experimented in this file last week to figure out a way to find broken resistor. It worked so I moved to "finalazing recursion" file.
 
-I will finish writing this later...
+
+11. finalizing recursion - main file which will solve the problem.
+
+I am still working on "finalizing recurion" file. Every explanataion is in the file. I will also add photos to explain better.
