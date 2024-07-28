@@ -1,0 +1,16 @@
+Every file here has its own purpose.
+
+The following files do following:
+1. reading - I tried out some DataFrame functions
+2. failed way to make perimeter - I liked the idea how it would work but I'm giving up on this for a while (might come back later)
+3. visualization - some data visualization which helped me find some symmetries
+4. voltages on nodes - I looked at the voltages on nodes and looked at which one decreased and increased
+5. filtering_and_ordering - first version of making perimeter data
+6. downloading - trying some stuff in python.
+7. data_append_version - trying append
+8. Data visualization and predictions - good version of making perimeter data + some data visualization, symmetries and prediction
+
+
+9. making perimeter - combination of all good versions of making perimeter. It reads data from voltages in every node and returns perimeter.
+
+I will finish writing this later...
