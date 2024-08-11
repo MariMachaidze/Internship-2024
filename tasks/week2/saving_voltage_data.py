@@ -24,7 +24,7 @@ circuit.V(1, node_name(0, 0), circuit.gnd, 10@u_V)  # 10V at top-left corner
 # Define resistors for the grid
 resistance = 1@u_kΩ
 
-broken = 'H11'
+broken = 'V01'
 
 # Create a 4x4 grid of resistors
 for i in range(4):
@@ -68,7 +68,7 @@ df = pd.DataFrame(data, columns=['node', 'voltage'])
 path = 'C:\\Users\\marim\\Desktop\\summer 2024 projects\\internship 2024\\data\\'
 
 # # Save DataFrame to a excel file
-df.to_csv(path+'BrokenH11_Voltage.csv', index=False)
+df.to_csv(path+'Broken'+broken+'_Voltage.csv', index=False)
 
 # # Optionally, display a message
 print("Data saved to csv file.")

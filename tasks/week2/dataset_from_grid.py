@@ -24,7 +24,7 @@ circuit.V(1, node_name(0, 0), circuit.gnd, 10@u_V)  # 10V at top-left corner
 # Define resistors for the grid
 resistance = 1@u_kΩ
 
-broken = 'V12'
+broken = '' #'V22'
 
 # Create a 4x4 grid of resistors
 for i in range(4):
@@ -50,8 +50,6 @@ circuit.R(f'GRD', node_name(3, 3), circuit.gnd, 0@u_uOhm)  # Using a very low re
 
 # Define the simulator and run a DC analysis
 simulator = circuit.simulator(temperature=25, nominal_temperature=25)
-# analysis = simulator.dc(V1=slice(0, 10, 0.1))
-# analysis = simulator.dc(V1=10@u_V)
 analysis = simulator.operating_point()
 
 # Print the circuit
@@ -77,8 +75,9 @@ for i in range(4):
             node2 = node_name(i, j+1)
             voltage1 = float(analysis[node1].as_ndarray()[0])
             voltage2 = float(analysis[node2].as_ndarray()[0])
-            print('Node {}, {}: {:4.1f} V'.format(node1, node2, voltage1 - voltage2))
-            data.append([node1, node2, voltage1, voltage2])
+            # print('Node {}, {}: {:4.1f} V'.format(node1, node2, voltage1 - voltage2))
+            # print(node1 + '+' + node2, "YEs")
+            data.append([node1 + '-' + node2, voltage1 - voltage2])
             n += 1
         # Vertical resistors
         if i < 3:
@@ -86,13 +85,13 @@ for i in range(4):
             node2 = node_name(i+1, j)
             voltage1 = float(analysis[node1].as_ndarray()[0])
             voltage2 = float(analysis[node2].as_ndarray()[0])
-            print('Node {}, {}: {:4.1f} V'.format(node1, node2, voltage1 - voltage2))
-            data.append([node1, node2, voltage1, voltage2])
+            # print('Node {}, {}: {:4.1f} V'.format(node1, node2, voltage1 - voltage2))
+            data.append([node1 + '-' + node2, voltage1 - voltage2])
             n += 1
 
-df = pd.DataFrame(data, columns=['node1', 'node2', 'voltage1', 'voltage2'])
+df = pd.DataFrame(data, columns=['nodes', broken])
 
-path = 'C:\\Users\\marim\\Desktop\\summer 2024 projects\\internship 2024\\data\\'
+path = 'C:\\Users\\marim\\Desktop\\summer 2024 projects\\internship 2024\\data\\datasets\\'
 
 # # Save DataFrame to a excel file
 df.to_csv(path+'Broken'+broken+'.csv', index=False)
