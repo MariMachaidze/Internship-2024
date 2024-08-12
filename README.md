@@ -3,11 +3,13 @@ Mariam Machaidze's internship projects and working progress.
 12 August:
  - I need to make a new dataset which looks like something like this:
 
-   VD1	Loc1	VD2	Loc2	VD3	Loc3
-   0.5	 101	0.2	 201	0.3	 111
-   0.1	 120	0.2	 100	0.4	 200
-   0.2	 130	0.4	 230	0.8	 101
-   0.3 	100	0.6	 101	0.9	 102
+ | VD1 | Loc1 | VD2 | Loc2 | VD3 | Loc3 |
+| --- | --- | --- | --- | --- | --- |
+|    0.5 |  101 | 0.2 |  201 | 0.3 |  111 |
+|    0.1 |  120 | 0.2 |  100 | 0.4 |  200 |
+|    0.2 |  130 | 0.4 |  230 | 0.8 |  101 |
+|    0.3  | 100 | 0.6 |  101 | 0.9 |  102 |
+
 
 * VD means Voltage Difference and every value are in voltages
 * Loc means Location where 101 means H01 and 201 means V01.
