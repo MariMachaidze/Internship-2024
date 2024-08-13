@@ -24,7 +24,7 @@ circuit.V(1, node_name(0, 0), circuit.gnd, 10@u_V)  # 10V at top-left corner
 # Define resistors for the grid
 resistance = 1@u_kΩ
 
-broken = 'V22'
+broken = 'V21'
 
 # Create a 4x4 grid of resistors
 for i in range(4):
@@ -72,7 +72,8 @@ for i in range(4):
         # print('i, j: {}, {}'.format(i, j))
         # Horizontal resistors
         if j < 3 and (i == 0 or i == 3):
-            num = 1*100 + i*10 + j
+            # num = 1*100 + i*10 + j
+            num = 1 + i*0.1 + j*0.01
             # print('i, j: {}, {}'.format(i, j), f'H{i}{j}')
             node1 = node_name(i, j)
             node2 = node_name(i, j+1)
@@ -82,12 +83,14 @@ for i in range(4):
             # data.append([f'H{i}{j}', num, voltage])           
             data.append([num, voltage])
             # n += 1
-        else:
-            num = 1*100 + i*10 + j
+        elif j < 3:
+            # num = 1*100 + i*10 + j
+            num = 1 + i*0.1 + j*0.01
             data_broken.append([f'H{i}{j}', num])
         # Vertical resistors
         if i < 3 and (j == 0 or j == 3):
-            num = 2*100 + i*10 + j
+            # num = 2*100 + i*10 + j
+            num = 2 + i*0.1 + j*0.01
             # print('i, j: {}, {}'.format(i, j), f'V{i}{j}')
             node1 = node_name(i, j)
             node2 = node_name(i+1, j)
@@ -97,8 +100,9 @@ for i in range(4):
             # data.append([f'V{i}{j}', num, voltage])
             data.append([num, voltage])
             # n += 1
-        else:
-            num = 2*100 + i*10 + j
+        elif i < 3:
+            # num = 2*100 + i*10 + j
+            num = 2 + i*0.1 + j*0.01
             data_broken.append([f'V{i}{j}', num])
 
 print(data)
