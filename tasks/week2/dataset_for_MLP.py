@@ -72,8 +72,6 @@ for i in range(4):
         # print('i, j: {}, {}'.format(i, j))
         # Horizontal resistors
         if j < 3 and (i == 0 or i == 3):
-            # num = 1*100 + i*10 + j
-            num = 1 + i*0.1 + j*0.01
             # print('i, j: {}, {}'.format(i, j), f'H{i}{j}')
             node1 = node_name(i, j)
             node2 = node_name(i, j+1)
@@ -83,17 +81,11 @@ for i in range(4):
                 voltage = voltage1 - voltage2
             else:
                 voltage = voltage2 - voltage1
-            # data.append([f'H{i}{j}', num, voltage])           
-            data.append([num, voltage])
-            # n += 1
+            data.append([f'H{i}{j}', i+0.5, j, voltage])   
         elif j < 3:
-            # num = 1*100 + i*10 + j
-            num = 1 + i*0.1 + j*0.01
-            data_broken.append([f'H{i}{j}', num])
+            data_broken.append([f'H{i}{j}', i+0.5, j])
         # Vertical resistors
         if i < 3 and (j == 0 or j == 3):
-            # num = 2*100 + i*10 + j
-            num = 2 + i*0.1 + j*0.01
             # print('i, j: {}, {}'.format(i, j), f'V{i}{j}')
             node1 = node_name(i, j)
             node2 = node_name(i+1, j)
@@ -103,31 +95,26 @@ for i in range(4):
                 voltage = voltage1 - voltage2
             else:
                 voltage = voltage2 - voltage1
-            # data.append([f'V{i}{j}', num, voltage])
-            data.append([num, voltage])
-            # n += 1
+            data.append([f'V{i}{j}', i, j+0.5, voltage])
         elif i < 3:
-            # num = 2*100 + i*10 + j
-            num = 2 + i*0.1 + j*0.01
-            data_broken.append([f'V{i}{j}', num])
+            data_broken.append([f'V{i}{j}', i, j+0.5])
 
 print(data)
 
 print(data_broken)
 
-# df = pd.DataFrame(data, columns=['resistor', 'location', 'voltage'])
-df = pd.DataFrame(data, columns=['location', 'voltage'])
+df = pd.DataFrame(data, columns=['resistor', 'X', 'Y', 'voltage'])
 
 print(df)
 
-df1 = pd.DataFrame(data_broken, columns=['resistor', 'location'])
+df1 = pd.DataFrame(data_broken, columns=['resistor', 'X', 'Y'])
 
 
 path = 'C:\\Users\\marim\\Desktop\\summer 2024 projects\\internship 2024\\data\\datasets\\'
 
 # # Save DataFrame to a excel file
-df.to_csv(path+'Broken_VDLoc'+broken+'.csv', index=False)
-df1.to_csv(path+'Broken_dataset.csv', index=False)
+df.to_csv(path+'Broken_MLP'+broken+'.csv', index=False)
+df1.to_csv(path+'Broken_dataset_MLP.csv', index=False)
 
 
 # # Optionally, display a message
