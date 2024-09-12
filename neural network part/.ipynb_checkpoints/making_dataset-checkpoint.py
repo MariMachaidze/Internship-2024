@@ -9,13 +9,7 @@ from PySpice.Spice.Library import SpiceLibrary
 from PySpice.Spice.Netlist import Circuit
 from PySpice.Unit import *
 
-import time
-
 import pandas as pd
-
-start_time = time.time()
-
-N = 4
 
 # Initialize the circuit
 circuit = Circuit('4x4 Resistor Grid')
@@ -26,7 +20,7 @@ def node_name(i, j):
 
 
 # Define resistors for the grid
-resistance = 1@u_kOhm
+resistance = 1@u_kΩ
 
 # broken = 'V22'
 
@@ -98,7 +92,7 @@ def making_circuit(broken, n):
 
     # print(data) # print perimeter data
 
-    # # columns and rows
+    # # # columns and rows
 
     for i in range(n):
         # print('i, j: {}, {}'.format(i, j))
@@ -117,7 +111,7 @@ def making_circuit(broken, n):
         voltage = voltage1 - voltage2
         data.append([i, 0, i, n-1, voltage])
 
-    print(data) # print perimeter data
+    # print(data) # print perimeter data
 
 
     df1 = pd.DataFrame(data, columns=['N1X', 'N1Y', 'N2X', 'N2Y', 'voltage'])
@@ -125,8 +119,9 @@ def making_circuit(broken, n):
 
     # return df1
 
-    df['broken'] = df1['voltage']
-# This needs to be corrected
+    df[broken] = df1['voltage']
+
+
 
 
 def all_resistors(n):
@@ -134,9 +129,9 @@ def all_resistors(n):
     for i in range(n):
         for j in range(n):
             # horizontal
-            if j < n-1:
+            if j < 3:
                 data.append([f'H{i}{j}', i, j+0.5])
-            if i < n-1:
+            if i < 3:
                 data.append([f'V{i}{j}', i+0.5, j])
     list = pd.DataFrame(data, columns=['name', 'X', 'Y'])
     # print(list['X'])
@@ -145,7 +140,7 @@ def all_resistors(n):
     return list
 
 
-list = all_resistors(N)
+list = all_resistors(4)
 # print(list)
 
 # print(list['name'])
@@ -153,7 +148,7 @@ list = all_resistors(N)
 
 for i in list['name']:
     # print(i)
-    making_circuit(i, N)
+    making_circuit(i, 4)
     # print("something")
 
 df = df.transpose()
@@ -164,20 +159,23 @@ print(df)
 
 
 
+'''
+ upper one works perfectly
+
+
+
+
+
+ I need to renew the lower code and make new to have collums and rows data too
+'''
+
+
 path = 'C:\\Users\\marim\\Desktop\\summer 2024 projects\\internship 2024\\neural network part\\'
 # C:\Users\marim\Desktop\summer 2024 projects\internship 2024\neural network part
 
 # # Save DataFrame to a excel file
-df.to_csv(path+'dataset'+str(N)+'wocr.csv', index=False)
+df.to_csv(path+'dataset.csv', index=False)
 
 
 # # Optionally, display a message
 print("Data saved to csv file.")
-
-
-
-
-end_time = time.time()
-
-execution_time = end_time - start_time
-print("time run:", execution_time)

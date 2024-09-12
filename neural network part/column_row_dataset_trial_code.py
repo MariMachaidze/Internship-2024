@@ -15,7 +15,7 @@ import pandas as pd
 
 start_time = time.time()
 
-N = 4
+N = 10
 
 # Initialize the circuit
 circuit = Circuit('4x4 Resistor Grid')
@@ -32,6 +32,7 @@ resistance = 1@u_kOhm
 
 df = pd.DataFrame()
 
+mari_df = pd.DataFrame()
 
 def making_circuit(broken, n):
 
@@ -73,28 +74,29 @@ def making_circuit(broken, n):
 
     # # # perimeter
     data = []
+    data_voltage = []
 
-    for i in range(n):
-        for j in range(n):
-            # print('i, j: {}, {}'.format(i, j))
-            # Horizontal resistors
-            if j < n - 1 and (i == 0 or i == n - 1):
-                # print('i, j: {}, {}'.format(i, j), f'H{i}{j}')
-                node1 = node_name(i, j)+broken
-                node2 = node_name(i, j+1)+broken
-                voltage1 = float(analysis[node1].as_ndarray()[0])
-                voltage2 = float(analysis[node2].as_ndarray()[0])
-                voltage = voltage1 - voltage2
-                data.append([i, j, i, j+1, voltage])   
-            # Vertical resistors
-            if i < n - 1 and (j == 0 or j == n - 1):
-                # print('i, j: {}, {}'.format(i, j), f'V{i}{j}')
-                node1 = node_name(i, j)+broken
-                node2 = node_name(i+1, j)+broken
-                voltage1 = float(analysis[node1].as_ndarray()[0])
-                voltage2 = float(analysis[node2].as_ndarray()[0])
-                voltage = voltage1 - voltage2
-                data.append([i, j, i, j+1, voltage]) 
+    # for i in range(n):
+    #     for j in range(n):
+    #         # print('i, j: {}, {}'.format(i, j))
+    #         # Horizontal resistors
+    #         if j < n - 1 and (i == 0 or i == n - 1):
+    #             # print('i, j: {}, {}'.format(i, j), f'H{i}{j}')
+    #             node1 = node_name(i, j)+broken
+    #             node2 = node_name(i, j+1)+broken
+    #             voltage1 = float(analysis[node1].as_ndarray()[0])
+    #             voltage2 = float(analysis[node2].as_ndarray()[0])
+    #             voltage = voltage1 - voltage2
+    #             data.append([i, j, i, j+1, voltage])   
+    #         # Vertical resistors
+    #         if i < n - 1 and (j == 0 or j == n - 1):
+    #             # print('i, j: {}, {}'.format(i, j), f'V{i}{j}')
+    #             node1 = node_name(i, j)+broken
+    #             node2 = node_name(i+1, j)+broken
+    #             voltage1 = float(analysis[node1].as_ndarray()[0])
+    #             voltage2 = float(analysis[node2].as_ndarray()[0])
+    #             voltage = voltage1 - voltage2
+    #             data.append([i, j, i, j+1, voltage]) 
 
     # print(data) # print perimeter data
 
@@ -109,6 +111,7 @@ def making_circuit(broken, n):
         voltage2 = float(analysis[node2].as_ndarray()[0])
         voltage = voltage1 - voltage2
         data.append([0, i, n-1, i, voltage])
+        data_voltage.append(voltage)
         # Vertical resistors
         node1 = node_name(i, 0)+broken
         node2 = node_name(i, n-1)+broken
@@ -116,18 +119,19 @@ def making_circuit(broken, n):
         voltage2 = float(analysis[node2].as_ndarray()[0])
         voltage = voltage1 - voltage2
         data.append([i, 0, i, n-1, voltage])
+        data_voltage.append(voltage)
 
-    print(data) # print perimeter data
+    # print(data) # print perimeter data
 
 
     df1 = pd.DataFrame(data, columns=['N1X', 'N1Y', 'N2X', 'N2Y', 'voltage'])
-    # print(df1)
 
-    # return df1
+    # mari_df = df1
+    # print(mari_df, "hello??")
+    return df1
 
-    df['broken'] = df1['voltage']
+    df = pd.DataFrame(data_voltage)
 # This needs to be corrected
-
 
 def all_resistors(n):
     data = []
@@ -151,30 +155,34 @@ list = all_resistors(N)
 # print(list['name'])
 # print(list['X'])
 
-for i in list['name']:
-    # print(i)
-    making_circuit(i, N)
-    # print("something")
+# for i in list['name']:
+#     # print(i)
+#     making_circuit(i, N)
+#     # print("something")
 
-df = df.transpose()
-df['X'] = list['X']
-df['Y'] = list['Y']
 
-print(df)
+mari_df = making_circuit("V66", N)
+
+print(mari_df)
+
+# df = df.transpose()
+# df['X'] = list['X']
+# df['Y'] = list['Y']
+
+# print(df)
+
 
 
 
 path = 'C:\\Users\\marim\\Desktop\\summer 2024 projects\\internship 2024\\neural network part\\'
 # C:\Users\marim\Desktop\summer 2024 projects\internship 2024\neural network part
 
-# # Save DataFrame to a excel file
-df.to_csv(path+'dataset'+str(N)+'wocr.csv', index=False)
+# Save DataFrame to a excel file
+mari_df.to_csv(path+'datasetV66cr.csv', index=False) #'+str(N)+'
 
 
-# # Optionally, display a message
+# Optionally, display a message
 print("Data saved to csv file.")
-
-
 
 
 end_time = time.time()
