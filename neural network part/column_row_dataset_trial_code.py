@@ -15,7 +15,7 @@ import pandas as pd
 
 start_time = time.time()
 
-N = 10
+N = 4
 
 # Initialize the circuit
 circuit = Circuit('4x4 Resistor Grid')
@@ -28,16 +28,18 @@ def node_name(i, j):
 # Define resistors for the grid
 resistance = 1@u_kOhm
 
-# broken = 'V22'
+broken = 'V12'
 
 df = pd.DataFrame()
 
 mari_df = pd.DataFrame()
 
-def making_circuit(broken, n):
+def making_circuit(broken, n, X1, Y1, X2, Y2, a):
+    print(X1, Y1, X2, Y2, a)
+    name = str(a)
 
     # Add voltage source
-    circuit.V(broken, node_name(0, 0)+broken, circuit.gnd, 10@u_V)  # 10V at top-left corner
+    circuit.V(name, node_name(X1, Y1)+name, circuit.gnd, 10@u_V)  # 10V at top-left corner
 
     # Create a nxn grid of resistors
     for i in range(n):
@@ -45,82 +47,54 @@ def making_circuit(broken, n):
             # Horizontal resistors
             if j < n-1:
                 if broken == f'H{i}{j}':
-                    circuit.R(f'H{i}{j}'+broken, node_name(i, j)+broken, node_name(i, j+1)+broken, 0@u_uOhm)
+                    circuit.R(f'H{i}{j}'+name, node_name(i, j)+name, node_name(i, j+1)+name, 0@u_uOhm)
                 else:
-                    circuit.R(f'H{i}{j}'+broken, node_name(i, j)+broken, node_name(i, j+1)+broken, resistance)
+                    circuit.R(f'H{i}{j}'+name, node_name(i, j)+name, node_name(i, j+1)+name, resistance)
             # Vertical resistors
             if i < n-1:
                 if broken == f'V{i}{j}':
-                    circuit.R(f'V{i}{j}'+broken, node_name(i, j)+broken, node_name(i+1, j)+broken, 0@u_uOhm)
+                    circuit.R(f'V{i}{j}'+name, node_name(i, j)+name, node_name(i+1, j)+name, 0@u_uOhm)
                 else:
-                    circuit.R(f'V{i}{j}'+broken, node_name(i, j)+broken, node_name(i+1, j)+broken, resistance)
+                    circuit.R(f'V{i}{j}'+name, node_name(i, j)+name, node_name(i+1, j)+name, resistance)
 
     # Ground the bottom-right corner
-    circuit.R(f'GRD'+broken, node_name(n-1, n-1)+broken, circuit.gnd, 0@u_uOhm)  # Using a very low resistance to simulate ground connection
+    circuit.R(f'GRD'+name, node_name(X2, Y2)+name, circuit.gnd, 0@u_uOhm)  # Using a very low resistance to simulate ground connection
 
     # Define the simulator and run a DC analysis
     simulator = circuit.simulator(temperature=25, nominal_temperature=25)
     analysis = simulator.operating_point()
 
-    # # Print the circuit
-    # print("The Circuit/Netlist:\n\n", circuit)
-
-    # # Print the node voltages using double for loops
-    # for i in range(4):
-    #     for j in range(4):
-    #         node = node_name(i, j)+broken
-    #         voltage = float(analysis[node].as_ndarray()[0])
-    #         print('Node {}: {:4.1f} V'.format(node, voltage))
-
-    # # # perimeter
     data = []
     data_voltage = []
-
-    # for i in range(n):
-    #     for j in range(n):
-    #         # print('i, j: {}, {}'.format(i, j))
-    #         # Horizontal resistors
-    #         if j < n - 1 and (i == 0 or i == n - 1):
-    #             # print('i, j: {}, {}'.format(i, j), f'H{i}{j}')
-    #             node1 = node_name(i, j)+broken
-    #             node2 = node_name(i, j+1)+broken
-    #             voltage1 = float(analysis[node1].as_ndarray()[0])
-    #             voltage2 = float(analysis[node2].as_ndarray()[0])
-    #             voltage = voltage1 - voltage2
-    #             data.append([i, j, i, j+1, voltage])   
-    #         # Vertical resistors
-    #         if i < n - 1 and (j == 0 or j == n - 1):
-    #             # print('i, j: {}, {}'.format(i, j), f'V{i}{j}')
-    #             node1 = node_name(i, j)+broken
-    #             node2 = node_name(i+1, j)+broken
-    #             voltage1 = float(analysis[node1].as_ndarray()[0])
-    #             voltage2 = float(analysis[node2].as_ndarray()[0])
-    #             voltage = voltage1 - voltage2
-    #             data.append([i, j, i, j+1, voltage]) 
-
-    # print(data) # print perimeter data
 
     # # columns and rows
 
     for i in range(n):
         # print('i, j: {}, {}'.format(i, j))
         # Horizontal resistors
-        node1 = node_name(0, i)+broken
-        node2 = node_name(n-1, i)+broken
+        node1 = node_name(0, i)+name
+        node2 = node_name(n-1, i)+name
         voltage1 = float(analysis[node1].as_ndarray()[0])
         voltage2 = float(analysis[node2].as_ndarray()[0])
         voltage = voltage1 - voltage2
+        # if(abs(voltage) < 0.00001):
+        #     voltage = 0
+        print(0, i, voltage1, n-1 , i, voltage2, voltage)
         data.append([0, i, n-1, i, voltage])
         data_voltage.append(voltage)
         # Vertical resistors
-        node1 = node_name(i, 0)+broken
-        node2 = node_name(i, n-1)+broken
+        node1 = node_name(i, 0)+name
+        node2 = node_name(i, n-1)+name
         voltage1 = float(analysis[node1].as_ndarray()[0])
         voltage2 = float(analysis[node2].as_ndarray()[0])
         voltage = voltage1 - voltage2
+        # if(abs(voltage) < 0.00001):
+        #     voltage = 0
+        print(i, 0, voltage1, i, n-1, voltage2, voltage)
         data.append([i, 0, i, n-1, voltage])
         data_voltage.append(voltage)
 
+    print()
     # print(data) # print perimeter data
 
 
@@ -128,57 +102,40 @@ def making_circuit(broken, n):
 
     # mari_df = df1
     # print(mari_df, "hello??")
+
+    df[name] = pd.DataFrame(data_voltage)
+    # print(df)
+
     return df1
 
-    df = pd.DataFrame(data_voltage)
-# This needs to be corrected
+resistors = [(0, 0, 3, 3),
+             (0, 0, 0, 3),
+             (1, 0, 1, 3),
+             (2, 0, 2, 3),
+             (3, 0, 3, 3),
+             (0, 0, 3, 0),
+             (0, 1, 3, 1),
+             (0, 2, 3, 2),
+             (0, 3, 3, 3),]
 
-def all_resistors(n):
-    data = []
-    for i in range(n):
-        for j in range(n):
-            # horizontal
-            if j < n-1:
-                data.append([f'H{i}{j}', i, j+0.5])
-            if i < n-1:
-                data.append([f'V{i}{j}', i+0.5, j])
-    list = pd.DataFrame(data, columns=['name', 'X', 'Y'])
-    # print(list['X'])
-    list.index = list['name']
-    # list = list.rename(index={'row2': 'new_row2'})
-    return list
+a=0
+for i in resistors:
+    a += 1
+    mari_df = making_circuit(broken, N, i[0], i[1], i[2], i[3], a)
 
-
-list = all_resistors(N)
-# print(list)
-
-# print(list['name'])
-# print(list['X'])
-
-# for i in list['name']:
-#     # print(i)
-#     making_circuit(i, N)
-#     # print("something")
-
-
-mari_df = making_circuit("V66", N)
+    
+# df = df.transpose()
+print(df)
 
 print(mari_df)
-
-# df = df.transpose()
-# df['X'] = list['X']
-# df['Y'] = list['Y']
-
-# print(df)
-
-
 
 
 path = 'C:\\Users\\marim\\Desktop\\summer 2024 projects\\internship 2024\\neural network part\\'
 # C:\Users\marim\Desktop\summer 2024 projects\internship 2024\neural network part
 
 # Save DataFrame to a excel file
-mari_df.to_csv(path+'datasetV66cr.csv', index=False) #'+str(N)+'
+# mari_df.to_csv(path+broken+'_2_cr.csv', index=False) #'+str(N)+'
+df.to_csv(path+broken+'__cr.csv', index=False) #'+str(N)+'
 
 
 # Optionally, display a message
