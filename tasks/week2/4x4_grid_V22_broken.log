@@ -1,11 +1,11 @@
 LTspice 24.0.12 for Windows
 Circuit: * C:\Users\marim\Desktop\summer 2024 projects\internship 2024\tasks\week2\4x4_grid_V22_broken.asc
-Start Time: Thu Nov 14 17:57:38 2024
+Start Time: Tue Nov 26 15:52:53 2024
 solver = Normal
 Maximum thread count: 8
 tnom = 27
 temp = 27
 method = modified trap
 Direct Newton iteration for .op point succeeded.
-Total elapsed time: 0.304 seconds.
+Total elapsed time: 0.219 seconds.
 
