@@ -15,7 +15,7 @@ import pandas as pd
 
 start_time = time.time()
 
-N = 10
+N = 4
 
 # Initialize the circuit
 circuit = Circuit('6x6 Resistor Grid')
@@ -40,13 +40,15 @@ def making_circuit(broken, n):
             # Horizontal resistors
             if j < n:
                 if broken == f'H{i}{j}':
-                    circuit.R(f'H{i}{j}'+broken, node_name(i, j)+broken, node_name(i, (j+1))+broken, 0@u_uOhm)
+                    # circuit.R(f'H{i}{j}'+broken, node_name(i, j)+broken, node_name(i, (j+1))+broken, 0@u_uOhm)
+                    pass
                 else:
                     circuit.R(f'H{i}{j}'+broken, node_name(i, j)+broken, node_name(i, (j+1))+broken, resistance)
             # Vertical resistors
             if i < n:
                 if broken == f'V{i}{j}':
-                    circuit.R(f'V{i}{j}'+broken, node_name(i, j)+broken, node_name((i+1), j)+broken, 0@u_uOhm)
+                    # circuit.R(f'V{i}{j}'+broken, node_name(i, j)+broken, node_name((i+1), j)+broken, 0@u_uOhm)
+                    pass
                 else:
                     circuit.R(f'V{i}{j}'+broken, node_name(i, j)+broken, node_name((i+1), j)+broken, resistance)
 
@@ -114,7 +116,7 @@ print(df)
 
 # # # saving data
 
-path = 'data\\'
+path = 'new_task/'
 df.to_csv(path+'grid_'+str(N)+'_nodes.csv', index=False)
 print("Data saved to csv file.")
 

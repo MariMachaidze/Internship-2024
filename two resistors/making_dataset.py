@@ -15,7 +15,9 @@ import pandas as pd
 
 start_time = time.time()
 
-N = 10
+N = 4
+broken_1 = 'V22'
+broken_2 = 'V13'
 
 # Initialize the circuit
 circuit = Circuit('6x6 Resistor Grid')
@@ -29,7 +31,9 @@ resistance = 1@u_kOhm
 
 df = pd.DataFrame()
 
-def making_circuit(broken, n):
+def making_circuit(broken_1, broken_2, n):
+
+    broken = broken_1 + broken_2
 
     # Add voltage source
     circuit.V(broken, node_name(1, 1)+broken, circuit.gnd, 10@u_V)  # 10V at top-left corner
@@ -39,13 +43,13 @@ def making_circuit(broken, n):
         for j in range(1, n+1):
             # Horizontal resistors
             if j < n:
-                if broken == f'H{i}{j}':
+                if broken_1 == f'H{i}{j}' or broken_2 == f'H{i}{j}':
                     circuit.R(f'H{i}{j}'+broken, node_name(i, j)+broken, node_name(i, (j+1))+broken, 0@u_uOhm)
                 else:
                     circuit.R(f'H{i}{j}'+broken, node_name(i, j)+broken, node_name(i, (j+1))+broken, resistance)
             # Vertical resistors
             if i < n:
-                if broken == f'V{i}{j}':
+                if broken_1 == f'V{i}{j}' or broken_2 == f'V{i}{j}':
                     circuit.R(f'V{i}{j}'+broken, node_name(i, j)+broken, node_name((i+1), j)+broken, 0@u_uOhm)
                 else:
                     circuit.R(f'V{i}{j}'+broken, node_name(i, j)+broken, node_name((i+1), j)+broken, resistance)
@@ -99,23 +103,30 @@ list = all_resistors(N)
 # print(list['name'])
 # print(list['X'])
 
-for i in list['name']:
-    # print(i)
-    making_circuit(i, N)
-    # print("something")
+# for i in list['name']:
+#     # print(i)
+#     making_circuit(i, N)
+#     # print("something")
+
+
+making_circuit(broken_1, broken_2, N)
 
 df = df.transpose()
 df['X'] = list['X']
 df['Y'] = list['Y']
 
-print(df)
+# print(df)
+
+
+
+
 
 
 
 # # # saving data
 
-path = 'data\\'
-df.to_csv(path+'grid_'+str(N)+'_nodes.csv', index=False)
+path = 'two resistors/datasets/'
+df.to_csv(path+'grid_'+broken_1+'_'+broken_2+'_nodes.csv', index=False)
 print("Data saved to csv file.")
 
 
