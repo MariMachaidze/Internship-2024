@@ -1,6 +1,6 @@
 LTspice 24.0.12 for Windows
 Circuit: * C:\Users\marim\Desktop\summer 2024 projects\internship 2024\tasks\week2\4x4_grid - changed voltage-ground.asc
-Start Time: Thu Nov 14 19:53:49 2024
+Start Time: Wed Dec  4 10:36:06 2024
 solver = Normal
 Maximum thread count: 8
 tnom = 27
@@ -8,5 +8,5 @@ temp = 27
 method = modified trap
 WARNING: Less than two connections to node n11.  This node is used by rv11.
 Direct Newton iteration for .op point succeeded.
-Total elapsed time: 0.469 seconds.
+Total elapsed time: 0.202 seconds.
 
