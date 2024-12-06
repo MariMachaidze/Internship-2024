@@ -1,6 +1,6 @@
 LTspice 24.0.12 for Windows
 Circuit: * C:\Users\marim\Desktop\summer 2024 projects\internship 2024\tasks\week2\6x6_grid.asc
-Start Time: Mon Nov 11 21:47:06 2024
+Start Time: Fri Dec  6 11:42:35 2024
 solver = Normal
 Maximum thread count: 8
 tnom = 27
@@ -27,5 +27,5 @@ Gmin = 2.70769e-13
 Gmin = 0
 Gmin stepping succeeded in finding the operating point.
 
-Total elapsed time: 0.627 seconds.
+Total elapsed time: 0.336 seconds.
 
